@@ -47,7 +47,7 @@ make_canvas_url <- function(...) {
   return(url)
 }
 
-#' @importFrom httr GET POST PUT HEAD
+#' @importFrom httr GET POST PUT HEAD DELETE
 canvas_query <- function(urlx, args = NULL, type = "GET") {
 
   args <- sc(args)
@@ -55,7 +55,7 @@ canvas_query <- function(urlx, args = NULL, type = "GET") {
                         httr::user_agent("rcanvas - https://github.com/daranzolin/rcanvas"),
                         httr::add_headers(Authorization = paste("Bearer", check_token())))
 
-  if (type %in% c("POST", "PUT"))
+  if (type %in% c("POST", "PUT","DELETE"))
     resp_fun_args$body = args
   else
     resp_fun_args$query = args
