@@ -46,9 +46,9 @@ get_account_course_list <- function(acc_id = NULL, include = NULL) {
 
 get_term_course_list <- function(term_id = NULL, acc_id = NULL, include = NULL) {
   if (!is.null(term_id)) {
-    url <- paste0(canvas_url(), paste("accounts/", acc_id, "/courses?enrollment_term_id=", term_id, sep = "" ))
+    url <- fs::path(canvas_url(), paste("accounts/", acc_id, "/courses?enrollment_term_id=", term_id, sep = "" ))
   } else {
-    url <- paste0(canvas_url(), paste("accounts", acc_id, "courses", sep = "/"))
+    url <- fs::path(canvas_url(), paste("accounts", acc_id, "courses", sep = "/"))
   }
   args <- list(
     per_page = 100,
@@ -143,7 +143,7 @@ get_course_items <- function(course_id, item, include = NULL) {
 #'   \dontrun{search_courses()}
 #'   \dontrun{search_courses(search="big data")}
 search_courses <- function(search=NULL) {
-  url <- paste0(canvas_url(), paste("search", "all_courses", sep = "/"))
+  url <- fs::path(canvas_url(), paste("search", "all_courses", sep = "/"))
   args = list(per_page=100)
   if (!is.null(search)) args["search"] = search
   resp <- canvas_query(url, args, "GET")
@@ -168,7 +168,7 @@ search_courses <- function(search=NULL) {
 #' @examples
 #' #' get_outcome_results(course_id = 20)
 get_outcome_results <- function(course_id) {
-  url <- paste0(canvas_url(), paste("courses", course_id, "outcome_results", sep = "/"))
+  url <- fs::path(canvas_url(), paste("courses", course_id, "outcome_results", sep = "/"))
   args <- list(per_page = 100)
   dat <- process_response(url, args)
 

@@ -40,7 +40,7 @@ create_course_content_migration <- function(course_id,
                                             day_substitutions = NULL,
                                             remove_dates = NULL) {
   message(sprintf("Copying course content from %s to %s...", source_course_id, course_id))
-  url <- paste0(canvas_url(), "courses/", course_id, "/content_migrations")
+  url <- fs::path(canvas_url(), "courses/", course_id, "/content_migrations")
 
   pre_attachment_args <- sc(list(name = name))
   names(pre_attachment_args) <- sprintf("pre_attachment[%s]", names(pre_attachment_args))

@@ -69,7 +69,7 @@ create_canvas_course <- function(account_id,
                                  grading_standard_id = NULL,
                                  course_format = NULL,
                                  enable_sis_activation = NULL) {
-  url <- paste0(canvas_url(), "accounts/", account_id, "/courses")
+  url <- fs::path(canvas_url(), "accounts/", account_id, "/courses")
   course_args <- sc(list(
     name = name,
     course_code = course_code,

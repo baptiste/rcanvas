@@ -11,7 +11,7 @@
 #' show_page_front(34232)
 show_wpage_front <- function(course_id){
   # GET /api/v1/courses/:course_id/front_page
-  url <- paste0(canvas_url(), file.path("courses", course_id, "front_page"))
+  url <- fs::path(canvas_url(), file.path("courses", course_id, "front_page"))
   resp <- process_response(url, args = "")
   return(resp)
 
@@ -28,7 +28,7 @@ show_wpage_front <- function(course_id){
 #'
 duplicate_wpage <- function(course_id, page_url){
   # POST /api/v1/courses/:course_id/pages/:url/duplicate
-  url <- paste0(canvas_url(), file.path("courses", course_id, "pages", page_url, "duplicate"))
+  url <- fs::path(canvas_url(), file.path("courses", course_id, "pages", page_url, "duplicate"))
   resp <- httr::POST(url,
                      httr::user_agent("rcanvas - https://github.com/daranzolin/rcanvas"),
                      httr::add_headers(Authorization = paste("Bearer", check_token())),
@@ -70,7 +70,7 @@ create_wpage_front <- function(){
 get_wpages_list <- function(course_id, sort_type = c("title", "created_at", "updated_at")[1],
                            order_type = "asc", search = NULL, published = NULL){
   # GET /api/v1/courses/:course_id/pages
-  url <- paste0(canvas_url(), file.path("courses", course_id, "pages"))
+  url <- fs::path(canvas_url(), file.path("courses", course_id, "pages"))
   args_list <- list(sort = sort_type, order = order_type)
   if(!is.null(search)) args_list <- c(args_list, search_term = search)
   if(!is.null(published)) args_list <- c(args_list, published = published)
@@ -90,7 +90,7 @@ get_wpages_list <- function(course_id, sort_type = c("title", "created_at", "upd
 #' @export
 get_wpage <- function(course_id, page_url){
   # GET /api/v1/courses/:course_id/pages/:url
-  url <- paste0(canvas_url(), file.path("courses", course_id, "pages", page_url))
+  url <- fs::path(canvas_url(), file.path("courses", course_id, "pages", page_url))
   resp <- process_response(url, args = "")
   return(resp)
 }
@@ -111,7 +111,7 @@ create_wpage <- function(course_id, title, body, editing_roles = "teachers", pub
   # POST /api/v1/courses/:course_id/pages
   # wiki_page[notify_of_update]	boolean	Whether participants should be notified when this page changes.
   # wiki_page[front_page]		    boolean	Set an unhidden page as the front page (if true)
-    url <- paste0(canvas_url(), file.path("courses", course_id, "pages"))
+    url <- fs::path(canvas_url(), file.path("courses", course_id, "pages"))
     args <- sc(list(`wiki_page[title]` = title,
                               `wiki_page[body]` = body,
                               `wiki_page[editing_roles]` = editing_roles,
@@ -147,7 +147,7 @@ create_wpage <- function(course_id, title, body, editing_roles = "teachers", pub
 update_wpage <- function(course_id, page_url, title = NULL, body = NULL, editing_roles = "teachers", published = FALSE, notify = FALSE){
  # PUT /api/v1/courses/:course_id/pages/:url
   # wiki_page[front_page]		    boolean	Set an unhidden page as the front page (if true)
-  url <- paste0(canvas_url(), file.path("courses", course_id, "pages", page_url))
+  url <- fs::path(canvas_url(), file.path("courses", course_id, "pages", page_url))
   args_list <- list(`wiki_page[editing_roles]` = editing_roles,
                     `wiki_page[published]` = published,
                     `wiki_page[notify_of_update]` = notify,
@@ -177,7 +177,7 @@ update_wpage <- function(course_id, page_url, title = NULL, body = NULL, editing
 #'
 delete_wpage <- function(course_id, page_url){
   # DELETE /api/v1/courses/:course_id/pages/:url
-  url <- paste0(canvas_url(), file.path("courses", course_id, "pages", page_url))
+  url <- fs::path(canvas_url(), file.path("courses", course_id, "pages", page_url))
   resp <- canvas_query(url, type = "DELETE")
 
   httr::stop_for_status(resp)

@@ -73,7 +73,7 @@ upload_file <- function(url, file_name, parent_folder_id = NULL, parent_folder_p
 #' @examples
 #' create_course_folder(34232, name = "activities")
 create_course_folder <- function(course_id, name, parent_folder_id = NULL) {
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste("courses", course_id, "folders", sep = "/"))
   args <- sc(list(name = name,
                   parent_folder_id = parent_folder_id))
@@ -127,7 +127,7 @@ create_course_assignment <- function(course_id, name, position = NULL, submissio
                                     lock_at = NULL, unlock_at = NULL, description = NULL, assignment_group_id = NULL, muted = NULL,
                                     assignment_overrides = NULL, only_visible_to_overrides = NULL, published = NULL, grading_standard_id = NULL,
                                     omit_from_final_grade = NULL, quiz_lti = NULL) {
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste("courses", course_id, "assignments", sep = "/"))
   args <- sc(list(name = name,
                   position = position,

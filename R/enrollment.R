@@ -7,7 +7,7 @@
 #' @param section if TRUE, course_id should be a section_id instead of a course_id and students will be enrolled into this section
 #' @param ... any other arguments passed to the API
 add_enrollment <- function(course_id, user_id, type, state, section=F, ...) {
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste(ifelse(section, "sections", "courses"), course_id, "enrollments", sep="/"))
   args <- list("enrollment[user_id]" = user_id, "enrollment[type]"=type, "enrollment[enrollment_state]"=state, ...)
   canvas_query(url, args, "POST")

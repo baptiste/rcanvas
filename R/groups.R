@@ -14,7 +14,7 @@ NULL
 #' @examples
 #' \dontrun{get_groups_self}
 get_groups_self <- function() {
-  url <- paste0(canvas_url(), "users/self/groups", sep = "/")
+  url <- fs::path(canvas_url(), "users/self/groups", sep = "/")
   args <- list(per_page = 100)
   include <- iter_args_list(NULL, "include[]")
   args <- c(args, include)
@@ -33,7 +33,7 @@ get_groups_self <- function() {
 #' \dontrun{get_groups_context(27)}
 get_groups_context <- function(object_id, object_type = "courses") {
   stopifnot(object_type %in% c("courses", "accounts"))
-  url <- paste0(canvas_url(), paste(object_type, object_id, "groups", sep = "/"))
+  url <- fs::path(canvas_url(), paste(object_type, object_id, "groups", sep = "/"))
   args <- list(per_page = 100)
   include <- iter_args_list(NULL, "include[]")
   args <- c(args, include)
@@ -60,7 +60,7 @@ get_group_users <- function(group_id, group_name) {
   if(missing(group_name)) {
     group_name <- NA
   }
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste("groups", group_id, "users", sep = "/"))
   args <- list(per_page = 100)
   include <- iter_args_list(NULL, "include[]")
@@ -78,7 +78,7 @@ get_group_users <- function(group_id, group_name) {
 #' @examples
 #' \dontrun{add_group_users(group_id=23, user_ids=327))}
 add_group_user <- function(group_id, user_id) {
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste("groups", group_id, "memberships", sep="/"))
   args <- list(user_id = user_id)
 
@@ -137,7 +137,7 @@ get_course_user_groups <- function(course_id) {
 #' get_group_categories(1350207)
 get_group_categories <- function(context_id, context_type = "courses") {
   stopifnot(context_type %in% c("courses", "accounts"))
-  url <- paste0(canvas_url(), paste(context_type, context_id,
+  url <- fs::path(canvas_url(), paste(context_type, context_id,
                                     "group_categories", sep = "/"))
   args <- list(per_page = 100)
   include <- iter_args_list(NULL, "include[]")
@@ -156,7 +156,7 @@ get_group_categories <- function(context_id, context_type = "courses") {
 #' @examples
 #' get_group_category(52872)
 get_group_category <- function(group_category_id) {
-  url <- paste0(canvas_url(), paste("group_categories", group_category_id,
+  url <- fs::path(canvas_url(), paste("group_categories", group_category_id,
                                     sep = "/"))
   args <- list(per_page = 100)
   include <- iter_args_list(NULL, "include[]")
@@ -187,7 +187,7 @@ create_group_category <- function(context_id, context_type = "courses",
                                   auto_leader = NULL, group_limit = NULL,
                                   create_group_count= NULL) {
   stopifnot(context_type %in% c("courses", "accounts"))
-  url <- paste0(canvas_url(), paste(context_type, context_id,
+  url <- fs::path(canvas_url(), paste(context_type, context_id,
                                     "group_categories", sep = "/"))
   args <- list(name = cat_name,
                self_signup = self_signup,
@@ -207,7 +207,7 @@ create_group_category <- function(context_id, context_type = "courses",
 #' @examples
 #' \dontrun{get_group_categories(361)}
 get_group_categories <- function(course_id) {
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste("courses", course_id, "group_categories", sep = "/"))
   args <- list(per_page = 100)
   include <- iter_args_list(NULL, "include[]")
@@ -225,7 +225,7 @@ get_group_categories <- function(course_id) {
 #' \dontrun{add_group(category=128,name="group name", description="description", join_level="invitation_only")}
 #'
 add_group <- function(category, name, description, join_level) {
-  url <- paste0(canvas_url(),
+  url <- fs::path(canvas_url(),
                 paste("group_categories", category, "groups", sep="/"))
   args <- list(name=name, description=description, join_level=join_level)
   invisible(canvas_query(url, args, "POST"))
