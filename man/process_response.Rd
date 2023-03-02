@@ -4,7 +4,7 @@
 \alias{process_response}
 \title{Process a Canvas API response}
 \usage{
-process_response(url, args)
+process_response(url, args, query_type = "GET")
 }
 \arguments{
 \item{url}{url to query}

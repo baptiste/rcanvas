@@ -12,9 +12,9 @@
 #'
 #' @return processed dataframe or list if unable to simplify
 #' @importFrom magrittr `%>%`
-process_response <- function(url, args) {
+process_response <- function(url, args, query_type="GET") {
 
-  resp <- canvas_query(url, args, "GET")
+  resp <- canvas_query(url, args, query_type)
 
   d <- paginate(resp) %>%
     purrr::map(httr::content, "text") %>%
