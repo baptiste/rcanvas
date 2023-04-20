@@ -60,6 +60,7 @@ canvas_query <- function(urlx, args = NULL, type = "GET") {
   else
     resp_fun_args$query = args
 
+  message(resp_fun_args)
   resp <- do.call(type, resp_fun_args)
 
   httr::stop_for_status(resp)
